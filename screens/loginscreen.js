@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
 import { Button, Input, Image } from "react-native-elements";
 import { StatusBar } from "expo-status-bar";
+import { StackActions } from "@react-navigation/native";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 
@@ -9,20 +10,26 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
+  /**useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      console.log("Clicking the button");
+      //navigation.replace("HomeScreen");
       if (authUser) {
-        navigation.replace("HomeScreen");
+        //navigation.replace("HomeScreen");
       }
     });
 
     return unsubscribe;
-  }, []);
+  }, []);*/
 
   const signIn = () => {
-    signInWithEmailAndPassword(auth, email, password).catch((error) => {
-      alert(error);
-    });
+    signInWithEmailAndPassword(auth, email, password)
+      .catch((error) => {
+        alert(error);
+      })
+      .then(() => {
+        navigation.replace("HomeScreen");
+      });
   };
 
   return (

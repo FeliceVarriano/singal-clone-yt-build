@@ -16,7 +16,9 @@ import { signOut } from "@firebase/auth";
 const HomeScreen = ({ navigation }) => {
   const signOutUser = () => {
     signOut(auth)
-      .then(() => {})
+      .then(() => {
+        navigation.replace("Login");
+      })
       .catch((error) => {
         alert(error);
       });
